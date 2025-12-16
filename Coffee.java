@@ -19,7 +19,7 @@ public class Coffee {
 
     public void menu(){
         Scanner txt = new Scanner(System.in);
-        System.out.println("---------------------\nEtat : EAU : " + this.eau + "cl | GRAINS : " + this.graine + "g | GOBLETS: " + this.gobelets + "\nCREDIT : " + printEuros(this.moneyeur) + " PANNE : \n--------------------\n1. Insérer une pièce (Simuler +0$50)\n2. Commender un Expresso (1$50)\n3. Commander un Allongé (2$00)\n4. MENU TECHNITIEN (Maintenance)\n5. Quitter");
+        System.out.println("---------------------\nEtat : EAU : " + this.eau + "cl | GRAINS : " + this.graine + "g | GOBLETS: " + this.gobelets + "\nCREDIT : " + printEuros(this.moneyeur) + " PANNE : " + IsOK(this.servis) +"\n--------------------\n1. Insérer une pièce (Simuler +0$50)\n2. Commender un Expresso (1$50)\n3. Commander un Allongé (2$00)\n4. MENU TECHNITIEN (Maintenance)\n5. Quitter");
         String choix = txt.nextLine();
         if (choix.equals("1")){ // Ajoute 0.50$ de crédit à la personne
             getCredit(50); 
@@ -28,8 +28,12 @@ public class Coffee {
                 System.out.println("Crédit insuffisant, ajoutez de la monnaie");
             } else if (servis >= 5){ // Si la machine est entartré --> fail
                 System.out.println("ERREUR: Machine\r\n" + "entartrée - Appelez le technicien");
-            } else if (this.eau < 10 || this.graine < 10 || this.gobelets <= 0) { // check si il y a assez d'eau, de graine et de goblets dans la machine, si il manque un seul élément --> fail
-                System.out.println("ERREUR: Machine\r\n" + "ingrédients insuffisant - Appelez le technicien");
+            } else if (this.eau < 10) { // check si il y a assez d'eau si il n'y en a pas assez --> fail
+                System.out.println("ERREUR: Machine\r\n" + "eau insuffisante - Appelez le technicien");
+            } else if (this.graine < 10) { // check si il y a assez de graines, si il n'y en a pas assez --> fail
+                System.out.println("ERREUR: Machine\r\n" + "grains insuffisants - Appelez le technicien");
+            } else if (this.gobelets < 1) { // check si il y a assez de goblets, si il n'y en a pas assez --> fail
+                System.out.println("ERREUR: Machine\r\n" + "gobelets insuffisants - Appelez le technicien");
             } else { // Enfin si toute les conditions d'en haut sont fausse tout va bien et la commande est éxécuté;
                 this.eau -= 10;
                 this.graine -= 10;
@@ -44,8 +48,12 @@ public class Coffee {
                 System.out.println("Pas assez d'argent inseré");
             } else if (servis >= 5){ 
                 System.out.println("ERREUR: Machine\r\n" + "entartrée - Appelez le technicien");
-            } else if (this.eau < 20 || this.graine < 10 || this.gobelets <= 0) {
-                System.out.println("ERREUR: Machine\r\n" + "ingrédients insuffisant - Appelez le technicien");
+            } else if (this.eau < 20) { // check si il y a assez d'eau, de graine et de goblets dans la machine, si il manque un seul élément --> fail
+                System.out.println("ERREUR: Machine\r\n" + "eau insuffisante - Appelez le technicien");
+            } else if (this.graine < 10) { // check si il y a assez d'eau, de graine et de goblets dans la machine, si il manque un seul élément --> fail
+                System.out.println("ERREUR: Machine\r\n" + "grains insuffisants - Appelez le technicien");
+            } else if (this.gobelets < 1) { // check si il y a assez d'eau, de graine et de goblets dans la machine, si il manque un seul élément --> fail
+                System.out.println("ERREUR: Machine\r\n" + "gobelets insuffisants - Appelez le technicien");
             } else {
                 this.eau -= 20;
                 this.graine -= 10;
@@ -75,6 +83,14 @@ public class Coffee {
 
     public void getCredit(int montant){ // Ajoute le montant inséré dans l'argument au credit de la personne
         this.moneyeur += montant;
+    }
+
+    public static String IsOK(int serv){
+        if (serv >= 5){
+            return "HORS SERVICE";
+        } else {
+            return "OK";
+        }
     }
 
     public static String printEuros(int money) { //Prend un int et le convertis en string en valeur monaitaire
