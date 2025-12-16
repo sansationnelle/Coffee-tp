@@ -21,16 +21,16 @@ public class Coffee {
         Scanner txt = new Scanner(System.in);
         System.out.println("---------------------\nEtat : EAU : " + this.eau + "cl | GRAINS : " + this.graine + "g | GOBLETS: " + this.gobelets + "\nCREDIT : " + printEuros(this.moneyeur) + " PANNE : \n--------------------\n1. Insérer une pièce (Simuler +0$50)\n2. Commender un Expresso (1$50)\n3. Commander un Allongé (2$00)\n4. MENU TECHNITIEN (Maintenance)\n5. Quitter");
         String choix = txt.nextLine();
-        if (choix.equals("1")){
-            getCredit(50);
-        } else if (choix.equals("2")){
-            if (this.moneyeur < 150) {
+        if (choix.equals("1")){ // Ajoute 0.50$ de crédit à la personne
+            getCredit(50); 
+        } else if (choix.equals("2")){ // Expresso
+            if (this.moneyeur < 150) { // Si la personne n'a pas inserer assez d'argent (1$50) --> fail
                 System.out.println("Crédit insuffisant, ajoutez de la monnaie");
-            } else if (servis >= 5){
+            } else if (servis >= 5){ // Si la machine est entartré --> fail
                 System.out.println("ERREUR: Machine\r\n" + "entartrée - Appelez le technicien");
-            } else if (this.eau < 10 || this.graine < 10 || this.gobelets <= 0) {
+            } else if (this.eau < 10 || this.graine < 10 || this.gobelets <= 0) { // check si il y a assez d'eau, de graine et de goblets dans la machine, si il manque un seul élément --> fail
                 System.out.println("ERREUR: Machine\r\n" + "ingrédients insuffisant - Appelez le technicien");
-            } else {
+            } else { // Enfin si toute les conditions d'en haut sont fausse tout va bien et la commande est éxécuté;
                 this.eau -= 10;
                 this.graine -= 10;
                 this.gobelets -= 1;
@@ -39,10 +39,10 @@ public class Coffee {
                 this.servis += 1;
                 System.out.println("Votre café est prêt");
             }
-        } else if (choix.equals("3")){
+        } else if (choix.equals("3")){ // Café alongé
             if (this.moneyeur < 200) {
                 System.out.println("Pas assez d'argent inseré");
-            } else if (servis >= 5){
+            } else if (servis >= 5){ 
                 System.out.println("ERREUR: Machine\r\n" + "entartrée - Appelez le technicien");
             } else if (this.eau < 20 || this.graine < 10 || this.gobelets <= 0) {
                 System.out.println("ERREUR: Machine\r\n" + "ingrédients insuffisant - Appelez le technicien");
@@ -55,29 +55,29 @@ public class Coffee {
                 this.servis += 1;
                 System.out.println("Votre café est prêt");
             }
-        } else if (choix.equals("4")){
+        } else if (choix.equals("4")){ // Menu du technicien
             System.out.println("---------------------\n Bienvenue dans le Menu Technicien, que voulez vous faire?---------------------\n1. Recharger la machine\n2. Détartrer la machine\n3. Prendre l'argent de la machine");
             choix = txt.nextLine();
-            if (choix.equals("1")) {
+            if (choix.equals("1")) { // recharge la machine au maximum pour tout les objets nécessaire
                 this.eau = 100;
                 this.graine = 50;
                 this.gobelets = 10;
-            } else if (choix.equals("2")) {
+            } else if (choix.equals("2")) { // détartre la machine
                 this.servis = 0;
-            } else if (choix.equals("3")) {
+            } else if (choix.equals("3")) { // Le mainteneur vole l'argent de la machine
                 System.out.println("La machine a " + printEuros(this.argent));
                 this.argent = 0;
             }
-        } else if (choix.equals("5")){
+        } else if (choix.equals("5")){ //Arrête le programme
             System.exit(0);
         }
     }
 
-    public void getCredit(int montant){
+    public void getCredit(int montant){ // Ajoute le montant inséré dans l'argument au credit de la personne
         this.moneyeur += montant;
     }
 
-    public static String printEuros(int money) {
+    public static String printEuros(int money) { //Prend un int et le convertis en string en valeur monaitaire
         if (money < 10) {
             return "0$0" + money + "";
         } else if (money < 100) {
